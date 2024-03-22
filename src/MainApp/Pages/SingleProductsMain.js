@@ -14,44 +14,65 @@ import { colors, fonts } from '../../styles';
 import axios from 'axios';
 import { Link } from '@react-navigation/native';
 import { SliderBox } from 'react-native-image-slider-box';
+import { encode } from 'base-64';
+import { Button } from 'react-native-paper';
 
 const AllProductsView = () => {
   const [allProducts, setAllProducts] = useState([]);
   const [productImages, setProductImages] = useState([]);
+  const [productOptions, setProductOptions] = useState([]);
 
   useEffect(() => {
     getAllProducts();
   }, []);
 
   const getAllProducts = () => {
-    // const username = 'ba356e2e1bd2465cf8c43a05edcbf352';
-    // const password = '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';
+    const username = 'ba356e2e1bd2465cf8c43a05edcbf352';
+    const password = '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';
 
-    // const basicAuth = 'Basic ' + base64encode(`${username}:${password}`);
+    const credentials = `${username}:${password}`;
+    const encodedCredentials = encode(credentials);
 
     axios
-      .get('https://forever-21-dubai.myshopify.com/products.json')
+      .get(
+        'https://forever-21-dubai.myshopify.com/admin/api/2024-01/products/7105463353513.json',
+        {
+          headers: {
+            Authorization: `Basic ${encodedCredentials}`,
+          },
+        },
+      )
       .then(res => {
-        let productsArr = [];
-        let maxItem = 0;
-
-        res.data.products.map((x, i) => {
-          if (i <= maxItem) {
-            productsArr.push(x);
-          }
-        });
+        let product = res.data.product;
 
         let allImages = [];
-        productsArr[0].images.map((x, i) => {
-          if (i <= 2) {
-            allImages.push(x.src);
-          }
+        product.images.map(x => {
+          allImages.push(x.src);
         });
+        let options = product.options;
+
+        options.map(x => {
+          x.activeValue = x.values[0];
+        });
+
         setProductImages(allImages);
+        setProductOptions(options);
       })
       .catch(err => {
         console.log(err);
       });
+  };
+  const [value1, setValue] = React.useState(true);
+
+  const handleChange = (name, value) => {
+    let options = productOptions;
+    options.map(x => {
+      if (x.name === name) {
+        x.activeValue = value;
+      }
+    });
+    setProductOptions(options);
+    setValue(!value1);
   };
 
   return (
@@ -63,66 +84,62 @@ const AllProductsView = () => {
         images={productImages}
         ImageComponentStyle={{ resizeMode: 'cover' }}
       />
+      {productOptions.map(x => {
+        return (
+          <View>
+            <View>
+              <Text style={{ fontSize: 18 }}>{x.name}</Text>
+            </View>
+            <View style={styles.optionContainer}>
+              {x.values.map(y => {
+                if (x.activeValue === y) {
+                  return (
+                    <View style={styles.optoionItem}>
+                      <Button
+                        style={{ backgroundColor: 'white' }}
+                        onPress={() => handleChange(x.name, y)}
+                        color="black"
+                        mode="outlined"
+                      >
+                        {y}
+                      </Button>
+                    </View>
+                  );
+                } else {
+                  return (
+                    <View style={styles.optoionItem}>
+                      <Button
+                        style={{ backgroundColor: 'black' }}
+                        onPress={() => handleChange(x.name, y)}
+                        color="white"
+                        mode="outlined"
+                      >
+                        {y}
+                      </Button>
+                    </View>
+                  );
+                }
+              })}
+            </View>
+          </View>
+        );
+      })}
     </ScrollView>
   );
 };
 const { width, height } = Dimensions.get('window');
-const IMG_HEIGHT = 500;
 
 const styles = StyleSheet.create({
   image: {
     height: height - 250,
     width: width,
   },
-  container: {
-    flex: 1,
-    backgroundColor: colors.white,
-  },
-  tabsContainer: {
-    alignSelf: 'stretch',
-    marginTop: 30,
-  },
-  itemOneContainer: {
-    flex: 1,
-    width: Dimensions.get('window').width / 2 - 60,
-  },
-  itemOneImageContainer: {
-    borderRadius: 3,
-    overflow: 'hidden',
-  },
-  itemOneImage: {
-    height: 200,
-    width: Dimensions.get('window').width / 2 - 60,
-  },
-  itemOneTitle: {
-    fontFamily: fonts.primaryRegular,
-    fontSize: 15,
-  },
-  itemOneSubTitle: {
-    fontFamily: fonts.primaryRegular,
-    fontSize: 13,
-    color: '#B2B2B2',
-    marginVertical: 3,
-  },
-  itemOnePrice: {
-    fontFamily: fonts.primaryRegular,
-    fontSize: 15,
-  },
-  itemOneRow: {
+  optionContainer: {
     flexDirection: 'row',
-    justifyContent: 'space-around',
-    marginTop: 10,
+    marginVertical: 5,
   },
-  itemOneContent: {
-    marginTop: 5,
-    marginBottom: 10,
-  },
-
-  badge: {
-    backgroundColor: colors.secondary,
-    borderRadius: 10,
-    paddingHorizontal: 10,
-    paddingVertical: 5,
+  optoionItem: {
+    margin: 5,
   },
 });
 

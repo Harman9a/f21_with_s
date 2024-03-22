@@ -15,6 +15,7 @@ import { TouchableOpacity } from 'react-native-ui-lib';
 import { SliderBox } from 'react-native-image-slider-box';
 // import { encode as base64encode } from 'base-64';
 import axios from 'axios';
+import { encode } from 'base-64';
 
 export default function HomeMain({ isExtended, setIsExtended }) {
   const [allProducts, setAllProducts] = useState([]);
@@ -61,13 +62,21 @@ export default function HomeMain({ isExtended, setIsExtended }) {
   }, []);
 
   const getAllProducts = () => {
-    // const username = 'ba356e2e1bd2465cf8c43a05edcbf352';
-    // const password = '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';
+    const username = 'ba356e2e1bd2465cf8c43a05edcbf352';
+    const password = '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';
 
-    // const basicAuth = 'Basic ' + base64encode(`${username}:${password}`);
+    const credentials = `${username}:${password}`;
+    const encodedCredentials = encode(credentials);
 
     axios
-      .get('https://forever-21-dubai.myshopify.com/products.json')
+      .get(
+        'https://forever-21-dubai.myshopify.com/admin/api/2024-01/products.json',
+        {
+          headers: {
+            Authorization: `Basic ${encodedCredentials}`,
+          },
+        },
+      )
       .then(res => {
         setAllProducts(res.data.products);
       })
@@ -156,7 +165,7 @@ export default function HomeMain({ isExtended, setIsExtended }) {
                         <Image
                           style={styles.itemOneImage}
                           source={{
-                            uri: product.variants[0].featured_image.src,
+                            uri: product.image.src,
                           }}
                         />
                       </View>
