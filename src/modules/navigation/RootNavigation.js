@@ -15,7 +15,7 @@ export default function NavigatorView(props) {
       <TouchableOpacity
         onPress={() => props.navigation.toggleDrawer()}
         style={{
-          paddingHorizontal: 16,
+          paddingHorizontal: 20,
           paddingVertical: 12,
         }}
       >

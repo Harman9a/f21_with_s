@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   StyleSheet,
   View,
@@ -11,8 +11,13 @@ import {
 
 import { fonts, colors } from '../../styles';
 import { Link } from '@react-navigation/native';
+import { TouchableOpacity } from 'react-native-ui-lib';
+import { SliderBox } from 'react-native-image-slider-box';
+// import { encode as base64encode } from 'base-64';
+import axios from 'axios';
 
 export default function HomeMain({ isExtended, setIsExtended }) {
+  const [allProducts, setAllProducts] = useState([]);
   const collectionArr = [
     {
       id: 1,
@@ -51,6 +56,26 @@ export default function HomeMain({ isExtended, setIsExtended }) {
     },
   ];
 
+  useEffect(() => {
+    getAllProducts();
+  }, []);
+
+  const getAllProducts = () => {
+    // const username = 'ba356e2e1bd2465cf8c43a05edcbf352';
+    // const password = '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';
+
+    // const basicAuth = 'Basic ' + base64encode(`${username}:${password}`);
+
+    axios
+      .get('https://forever-21-dubai.myshopify.com/products.json')
+      .then(res => {
+        setAllProducts(res.data.products);
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  };
+
   const CollectionItem = ({ imgsrc, name }) => {
     return (
       <View>
@@ -61,6 +86,7 @@ export default function HomeMain({ isExtended, setIsExtended }) {
       </View>
     );
   };
+
   return (
     <View style={styles.container}>
       <TextInput
@@ -93,7 +119,7 @@ export default function HomeMain({ isExtended, setIsExtended }) {
         >
           {collectionArr.map(x => {
             return (
-              <Link to="/AllProducts">
+              <Link to="/Products">
                 <CollectionItem key={x.id} imgsrc={x.src} name={x.name} />
               </Link>
             );
@@ -110,6 +136,64 @@ export default function HomeMain({ isExtended, setIsExtended }) {
             />
           </View>
         </View>
+        <ScrollView
+          horizontal
+          showsHorizontalScrollIndicator={false}
+          contentContainerStyle={{
+            alignItems: 'center',
+            gap: 10,
+            paddingHorizontal: 10,
+            marginVertical: 20,
+          }}
+        >
+          {allProducts.map((product, i) => {
+            if (i < 10) {
+              return (
+                <TouchableOpacity key={i}>
+                  <Link to="/SingleProducts">
+                    <View style={styles.itemOneContainer}>
+                      <View style={styles.itemOneImageContainer}>
+                        <Image
+                          style={styles.itemOneImage}
+                          source={{
+                            uri: product.variants[0].featured_image.src,
+                          }}
+                        />
+                      </View>
+                      <View style={styles.itemOneContent}>
+                        <Text style={styles.itemOneTitle} numberOfLines={1}>
+                          {product.title}
+                        </Text>
+                        <Text style={styles.itemOnePrice} numberOfLines={1}>
+                          AED {product.variants[0].price}
+                        </Text>
+                      </View>
+                    </View>
+                  </Link>
+                </TouchableOpacity>
+              );
+            }
+          })}
+        </ScrollView>
+        <View>
+          <Image
+            source={require('../../../assets/images/preSpring.jpg')}
+            resizeMode={'cover'}
+            style={styles.imagebanner}
+          />
+        </View>
+        <View>
+          <SliderBox
+            autoplay
+            // circleLoop
+            dotStyle={{ display: 'none' }}
+            images={[
+              require('../../../assets/images/banner.gif'),
+              require('../../../assets/images/slider4.jpg'),
+            ]}
+            ImageComponentStyle={{ resizeMode: 'cover' }}
+          />
+        </View>
       </ScrollView>
     </View>
   );
@@ -118,6 +202,7 @@ export default function HomeMain({ isExtended, setIsExtended }) {
 const styles = StyleSheet.create({
   container: {
     backgroundColor: 'white',
+    marginBottom: 80,
   },
   inputField: {
     height: 50,
@@ -211,5 +296,40 @@ const styles = StyleSheet.create({
   itemOneImageContainer: {
     borderRadius: 3,
     overflow: 'hidden',
+  },
+  itemOneContainer: {
+    flex: 1,
+    width: Dimensions.get('window').width / 2 - 40,
+  },
+  itemOneImageContainer: {
+    borderRadius: 3,
+    overflow: 'hidden',
+  },
+  itemOneImage: {
+    height: 200,
+    width: Dimensions.get('window').width / 2 - 60,
+  },
+  itemOneTitle: {
+    fontFamily: fonts.primaryRegular,
+    fontSize: 15,
+  },
+  itemOneSubTitle: {
+    fontFamily: fonts.primaryRegular,
+    fontSize: 13,
+    color: '#B2B2B2',
+    marginVertical: 3,
+  },
+  itemOnePrice: {
+    fontFamily: fonts.primaryRegular,
+    fontSize: 15,
+  },
+  itemOneRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    marginTop: 10,
+  },
+  itemOneContent: {
+    marginTop: 5,
+    marginBottom: 10,
   },
 });

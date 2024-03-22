@@ -1,23 +1,12 @@
-import { connect } from 'react-redux';
-import { compose, lifecycle } from 'recompose';
+import { View, Text } from 'react-native';
+import React from 'react';
 
-import GalleryScreen from './GalleryView';
-import { loadImages, refreshImages } from './GalleryState';
+const GalleryViewContainer = () => {
+  return (
+    <View>
+      <Text>GalleryViewContainer</Text>
+    </View>
+  );
+};
 
-export default compose(
-  connect(
-    state => ({
-      isLoading: state.gallery.isLoading,
-      images: state.gallery.images,
-    }),
-    dispatch => ({
-      loadImages: () => dispatch(loadImages()),
-      refreshImages: () => dispatch(refreshImages()),
-    }),
-  ),
-  lifecycle({
-    componentDidMount() {
-      this.props.loadImages();
-    },
-  }),
-)(GalleryScreen);
+export default GalleryViewContainer;

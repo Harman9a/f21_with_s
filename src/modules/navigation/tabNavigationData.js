@@ -22,25 +22,24 @@ const tabNavigationData = [
   },
   {
     name: 'Categories',
-    component: CalendarScreen,
+    component: HomeMain,
     icon: <AntDesign name="appstore-o" size={25} />,
   },
   {
     name: 'Account',
-    component: GridsScreen,
+    component: HomeMain,
     icon: <AntDesign name="user" size={25} />,
   },
   {
     name: 'Notifications',
-    component: PagesScreen,
+    component: GridsScreen,
     icon: <Entypo name="notification" size={25} />,
   },
-  {
-    name: 'Notifications2',
-    component: ComponentsScreen,
-    icon: <Entypo name="notification" size={25} />,
-  },
-
+  // {
+  //   name: 'Notifications2',
+  //   component: ComponentsScreen,
+  //   icon: <Entypo name="notification" size={25} />,
+  // },
   // {
   //   name: 'Calendar',
   //   component: CalendarScreen,
