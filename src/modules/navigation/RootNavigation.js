@@ -32,6 +32,7 @@ export default function NavigatorView(props) {
           name={item.name}
           component={item.component}
           options={{
+            headerTitle: item.title,
             headerLeft: item.headerLeft || headerLeftComponentMenu,
             headerTitleStyle: item.headerTitleStyle,
           }}

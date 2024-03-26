@@ -14,7 +14,7 @@ import axios from 'axios';
 import { Link } from '@react-navigation/native';
 import { encode } from 'base-64';
 
-const AllProductsView = () => {
+const AllProductsView = ({ navigation }) => {
   const [allProducts, setAllProducts] = useState();
 
   useEffect(() => {
@@ -47,6 +47,7 @@ const AllProductsView = () => {
           if (itemInOneRwo <= maxItemInOneRwo) {
             productsSubArr.push({
               id: i,
+              productId: x.id,
               brand: 'Weeknight',
               title: x.title,
               subtitle: '',
@@ -71,25 +72,33 @@ const AllProductsView = () => {
 
   const renderRowOne = rowData => {
     const cellViews = rowData.item.map(item => (
-      <TouchableOpacity key={item.id}>
-        <Link to="/SingleProducts">
-          <View style={styles.itemOneContainer}>
-            <View style={styles.itemOneImageContainer}>
-              <Image style={styles.itemOneImage} source={{ uri: item.image }} />
-            </View>
-            <View style={styles.itemOneContent}>
-              <Text style={styles.itemOneTitle} numberOfLines={1}>
-                {item.title}
-              </Text>
-              {/* <Text style={styles.itemOneSubTitle} numberOfLines={3}>
+      <TouchableOpacity
+        key={item.id}
+        onPress={() => {
+          /* 1. Navigate to the Details route with params */
+          navigation.navigate('SingleProducts', {
+            productId: item.productId,
+          });
+        }}
+      >
+        {/* <Link to="/SingleProducts"> */}
+        <View style={styles.itemOneContainer}>
+          <View style={styles.itemOneImageContainer}>
+            <Image style={styles.itemOneImage} source={{ uri: item.image }} />
+          </View>
+          <View style={styles.itemOneContent}>
+            <Text style={styles.itemOneTitle} numberOfLines={1}>
+              {item.title}
+            </Text>
+            {/* <Text style={styles.itemOneSubTitle} numberOfLines={3}>
               {item.subtitle}
             </Text> */}
-              <Text style={styles.itemOnePrice} numberOfLines={1}>
-                {item.price}
-              </Text>
-            </View>
+            <Text style={styles.itemOnePrice} numberOfLines={1}>
+              {item.price}
+            </Text>
           </View>
-        </Link>
+        </View>
+        {/* </Link> */}
       </TouchableOpacity>
     ));
     return (

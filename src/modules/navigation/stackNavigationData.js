@@ -36,6 +36,7 @@ const headerBackground = require('../../../assets/images/topBarBg.png');
 const StackNavigationData = [
   {
     name: 'Froever 21',
+    title: 'Froever 21',
     component: TabNavigator,
     headerLeft: null,
     headerBackground: { source: headerBackground },
@@ -44,30 +45,10 @@ const StackNavigationData = [
       fontSize: 18,
     },
   },
-  {
-    name: 'Charts',
-    component: AvailableInFullVersion,
-    headerLeft: headerLeftComponent,
-    headerBackground: { source: headerBackground },
-    headerTitleStyle: {
-      fontFamily: fonts.primaryRegular,
-      color: colors.white,
-      fontSize: 18,
-    },
-  },
-  {
-    name: 'Blog',
-    component: AvailableInFullVersion,
-    headerLeft: headerLeftComponent,
-    headerBackground: { source: headerBackground },
-    headerTitleStyle: {
-      fontFamily: fonts.primaryRegular,
-      color: colors.white,
-      fontSize: 18,
-    },
-  },
+
   {
     name: 'Products',
+    title: 'Products',
     component: AllProductsMain,
     headerLeft: headerLeftComponent,
     headerBackground: { source: headerBackground },
@@ -78,67 +59,12 @@ const StackNavigationData = [
   },
   {
     name: 'SingleProducts',
+    title: '',
     component: SingleProductsMain,
     headerLeft: headerLeftComponent,
     headerBackground: { source: headerBackground },
     headerTitleStyle: {
       fontFamily: fonts.primaryRegular,
-      fontSize: 18,
-    },
-  },
-
-  {
-    name: 'Profile',
-    component: AvailableInFullVersion,
-    headerLeft: headerLeftComponent,
-    headerBackground: { source: headerBackground },
-    headerTitleStyle: {
-      fontFamily: fonts.primaryRegular,
-      color: colors.white,
-      fontSize: 18,
-    },
-  },
-  {
-    name: 'Article',
-    component: AvailableInFullVersion,
-    headerLeft: headerLeftComponent,
-    headerBackground: { source: headerBackground },
-    headerTitleStyle: {
-      fontFamily: fonts.primaryRegular,
-      color: colors.white,
-      fontSize: 18,
-    },
-  },
-  {
-    name: 'Chat',
-    component: AvailableInFullVersion,
-    headerLeft: headerLeftComponent,
-    headerBackground: { source: headerBackground },
-    headerTitleStyle: {
-      fontFamily: fonts.primaryRegular,
-      color: colors.white,
-      fontSize: 18,
-    },
-  },
-  {
-    name: 'Messages',
-    component: AvailableInFullVersion,
-    headerLeft: headerLeftComponent,
-    headerBackground: { source: headerBackground },
-    headerTitleStyle: {
-      fontFamily: fonts.primaryRegular,
-      color: colors.white,
-      fontSize: 18,
-    },
-  },
-  {
-    name: 'Auth',
-    component: AvailableInFullVersion,
-    headerLeft: headerLeftComponent,
-    headerBackground: { source: headerBackground },
-    headerTitleStyle: {
-      fontFamily: fonts.primaryRegular,
-      color: colors.white,
       fontSize: 18,
     },
   },

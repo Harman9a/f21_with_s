@@ -7,6 +7,9 @@ import HomeMain from '../../MainApp/Pages/HomeMain';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import Entypo from 'react-native-vector-icons/Entypo';
+import CategotiesMain from '../../MainApp/Pages/CategotiesMain';
+import AccountMain from '../../MainApp/Pages/AccountMain';
+import NotificationMain from '../../MainApp/Pages/NotificationMain';
 
 // const iconHome = require('../../../assets/images/tabbar/home.png');
 // const iconCalendar = require('../../../assets/images/tabbar/calendar.png');
@@ -22,17 +25,17 @@ const tabNavigationData = [
   },
   {
     name: 'Categories',
-    component: HomeMain,
+    component: CategotiesMain,
     icon: <AntDesign name="appstore-o" size={25} />,
   },
   {
     name: 'Account',
-    component: HomeMain,
+    component: AccountMain,
     icon: <AntDesign name="user" size={25} />,
   },
   {
     name: 'Notifications',
-    component: GridsScreen,
+    component: NotificationMain,
     icon: <Entypo name="notification" size={25} />,
   },
   // {
@@ -43,22 +46,22 @@ const tabNavigationData = [
   // {
   //   name: 'Calendar',
   //   component: CalendarScreen,
-  //   icon: iconCalendar,
+  //   icon: <Entypo name="notification" size={25} />,
   // },
   // {
   //   name: 'Grids',
   //   component: GridsScreen,
-  //   icon: iconGrids,
+  //   icon: <Entypo name="notification" size={25} />,
   // },
   // {
   //   name: 'Pages',
   //   component: PagesScreen,
-  //   icon: iconPages,
+  //   icon: <Entypo name="notification" size={25} />,
   // },
   // {
   //   name: 'Components',
   //   component: ComponentsScreen,
-  //   icon: iconComponents,
+  //   icon: <Entypo name="notification" size={25} />,
   // },
 ];
 

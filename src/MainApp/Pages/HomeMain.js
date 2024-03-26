@@ -13,12 +13,11 @@ import { fonts, colors } from '../../styles';
 import { Link } from '@react-navigation/native';
 import { TouchableOpacity } from 'react-native-ui-lib';
 import { SliderBox } from 'react-native-image-slider-box';
-// import { encode as base64encode } from 'base-64';
-import axios from 'axios';
-import { encode } from 'base-64';
 
-export default function HomeMain({ isExtended, setIsExtended }) {
-  const [allProducts, setAllProducts] = useState([]);
+import ProductsScrollList from '../Components/ProductsScrollList';
+import { Button } from 'react-native-paper';
+
+export default function HomeMain({ isExtended, setIsExtended, navigation }) {
   const collectionArr = [
     {
       id: 1,
@@ -56,34 +55,6 @@ export default function HomeMain({ isExtended, setIsExtended }) {
       src: require('../../../assets/images/F21_SleepwearLingerie_M.png'),
     },
   ];
-
-  useEffect(() => {
-    getAllProducts();
-  }, []);
-
-  const getAllProducts = () => {
-    const username = 'ba356e2e1bd2465cf8c43a05edcbf352';
-    const password = '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';
-
-    const credentials = `${username}:${password}`;
-    const encodedCredentials = encode(credentials);
-
-    axios
-      .get(
-        'https://forever-21-dubai.myshopify.com/admin/api/2024-01/products.json',
-        {
-          headers: {
-            Authorization: `Basic ${encodedCredentials}`,
-          },
-        },
-      )
-      .then(res => {
-        setAllProducts(res.data.products);
-      })
-      .catch(err => {
-        console.log(err);
-      });
-  };
 
   const CollectionItem = ({ imgsrc, name }) => {
     return (
@@ -145,45 +116,42 @@ export default function HomeMain({ isExtended, setIsExtended }) {
             />
           </View>
         </View>
-        <ScrollView
-          horizontal
-          showsHorizontalScrollIndicator={false}
-          contentContainerStyle={{
-            alignItems: 'center',
-            gap: 10,
-            paddingHorizontal: 10,
-            marginVertical: 20,
-          }}
-        >
-          {allProducts.map((product, i) => {
-            if (i < 10) {
-              return (
-                <TouchableOpacity key={i}>
-                  <Link to="/SingleProducts">
-                    <View style={styles.itemOneContainer}>
-                      <View style={styles.itemOneImageContainer}>
-                        <Image
-                          style={styles.itemOneImage}
-                          source={{
-                            uri: product.image.src,
-                          }}
-                        />
-                      </View>
-                      <View style={styles.itemOneContent}>
-                        <Text style={styles.itemOneTitle} numberOfLines={1}>
-                          {product.title}
-                        </Text>
-                        <Text style={styles.itemOnePrice} numberOfLines={1}>
-                          AED {product.variants[0].price}
-                        </Text>
-                      </View>
-                    </View>
-                  </Link>
-                </TouchableOpacity>
-              );
-            }
-          })}
-        </ScrollView>
+
+        <View style={{ backgroundColor: 'white', paddingBottom: 20 }}>
+          <View
+            style={{
+              flexDirection: 'row',
+              justifyContent: 'space-between',
+              alignItems: 'center',
+              paddingHorizontal: 10,
+              paddingTop: 10,
+            }}
+          >
+            <Text
+              style={{
+                color: 'black',
+                fontSize: 16,
+              }}
+            >
+              FRESHPICKS
+            </Text>
+
+            <Button
+              mode="contained"
+              onPress={() => navigation.navigate('Products')}
+              style={{
+                backgroundColor: 'black',
+                marginTop: 5,
+              }}
+              labelStyle={{ fontSize: 12 }}
+            >
+              View All
+            </Button>
+          </View>
+          <View>
+            <ProductsScrollList navigation={navigation} />
+          </View>
+        </View>
         <View>
           <Image
             source={require('../../../assets/images/preSpring.jpg')}
