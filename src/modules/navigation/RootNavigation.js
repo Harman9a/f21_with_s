@@ -34,6 +34,7 @@ export default function NavigatorView(props) {
           options={{
             headerTitle: item.title,
             headerLeft: item.headerLeft || headerLeftComponentMenu,
+            headerRight: item.headerRight,
             headerTitleStyle: item.headerTitleStyle,
           }}
         />
