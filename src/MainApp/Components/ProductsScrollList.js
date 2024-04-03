@@ -20,23 +20,12 @@ const ProductsScrollList = ({ navigation }) => {
   }, []);
 
   const getAllProducts = () => {
-    const username = 'ba356e2e1bd2465cf8c43a05edcbf352';
-    const password = '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';
-
-    const credentials = `${username}:${password}`;
-    const encodedCredentials = encode(credentials);
-
     axios
       .get(
-        'https://forever-21-dubai.myshopify.com/admin/api/2024-01/products.json',
-        {
-          headers: {
-            Authorization: `Basic ${encodedCredentials}`,
-          },
-        },
+        `${process.env.REACT_APP_SEARCH_URL}/instantsearch?q=&collection=new-arrivals-dresses&apiKey=${process.env.REACT_APP_SEARCH_APIKEY}&country=AE&locale=en&getProductDescription=0&skip=0&take=28`,
       )
       .then(res => {
-        setAllProducts(res.data.products);
+        setAllProducts(res.data.data.items);
       })
       .catch(err => {
         console.log(err);
@@ -72,7 +61,7 @@ const ProductsScrollList = ({ navigation }) => {
                   <Image
                     style={styles.itemOneImage}
                     source={{
-                      uri: product.image.src,
+                      uri: 'https://' + product.images[0].url,
                     }}
                   />
                 </View>

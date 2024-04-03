@@ -69,11 +69,14 @@ export default function HomeMain({ isExtended, setIsExtended, navigation }) {
 
   return (
     <View style={styles.container}>
-      <TextInput
-        autoCapitalize="none"
-        placeholder="Search Item"
-        style={styles.inputField}
-      />
+      <TouchableOpacity onPress={() => navigation.navigate('SearchProduct')}>
+        <TextInput
+          autoCapitalize="none"
+          placeholder="Search Item"
+          style={styles.inputField}
+          editable={false}
+        />
+      </TouchableOpacity>
       <ScrollView>
         <View style={styles.banner}>
           <Text style={styles.btnOutlineText}>

@@ -29,6 +29,9 @@ import RenderHTML from 'react-native-render-html';
 
 const AllProductsView = ({ route, navigation }) => {
   const [itemNo, setItemNo] = useState(1);
+  const [product, setProduct] = useState([]);
+  const [productPrice, setProductPrice] = useState(0);
+  const [productPriceCom, setProductPriceCom] = useState(0);
   const [productImages, setProductImages] = useState([]);
   const [productOptions, setProductOptions] = useState([]);
   const [productDetails, setProductDetails] = useState({
@@ -42,15 +45,15 @@ const AllProductsView = ({ route, navigation }) => {
   }, []);
 
   const getAllProducts = () => {
-    const username = 'ba356e2e1bd2465cf8c43a05edcbf352';
-    const password = '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';
+    const username = process.env.REACT_APP_USERNAME;
+    const password = process.env.REACT_APP_PASSWORD;
 
     const credentials = `${username}:${password}`;
     const encodedCredentials = encode(credentials);
 
     axios
       .get(
-        `https://forever-21-dubai.myshopify.com/admin/api/2024-01/products/${productId}.json`,
+        `${process.env.REACT_APP_HOST_URL}/admin/api/2024-01/products/${productId}.json`,
         {
           headers: {
             Authorization: `Basic ${encodedCredentials}`,
@@ -69,7 +72,9 @@ const AllProductsView = ({ route, navigation }) => {
         options.map(x => {
           x.activeValue = x.values[0];
         });
-
+        setProduct(product);
+        setProductPrice(product.variants[0].price);
+        setProductPriceCom(product.variants[0].compare_at_price);
         setProductImages(allImages);
         setProductOptions(options);
         setProductDetails({
@@ -129,6 +134,50 @@ const AllProductsView = ({ route, navigation }) => {
           images={productImages}
           ImageComponentStyle={{ resizeMode: 'cover' }}
         />
+        <View
+          style={{
+            backgroundColor: 'white',
+            marginVertical: 5,
+            padding: 8,
+          }}
+        >
+          <View>
+            <Text
+              style={{
+                fontSize: 20,
+                color: 'black',
+                fontWeight: '600',
+                marginHorizontal: 5,
+                marginVertical: 5,
+              }}
+            >
+              {product.title}
+            </Text>
+            <View style={{ flexDirection: 'row' }}>
+              <Text
+                style={{
+                  fontSize: 18,
+                  color: 'black',
+                  fontWeight: '600',
+                  marginHorizontal: 5,
+                  textDecorationLine: 'line-through',
+                }}
+              >
+                AED {productPriceCom}
+              </Text>
+              <Text
+                style={{
+                  fontSize: 18,
+                  color: 'red',
+                  fontWeight: '700',
+                  marginHorizontal: 5,
+                }}
+              >
+                AED {productPrice}
+              </Text>
+            </View>
+          </View>
+        </View>
         {productOptions.map(x => {
           return (
             <View

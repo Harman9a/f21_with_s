@@ -18,6 +18,7 @@ import MaterialCommunityIcons from 'react-native-vector-icons/Feather';
 import { colors, fonts } from '../../styles';
 import AllProductsMain from '../../MainApp/Pages/AllProductsMain';
 import SingleProductsMain from '../../MainApp/Pages/SingleProductsMain';
+import SearchMain from '../../MainApp/Pages/SearchMain';
 
 const headerLeftComponent = props => {
   return (
@@ -96,7 +97,7 @@ const StackNavigationData = [
 
   {
     name: 'Products',
-    title: 'Products',
+    title: 'New arrival dresses',
     component: AllProductsMain,
     headerLeft: headerLeftComponent,
     headerRight: headerRightComponentFillter,
@@ -110,6 +111,18 @@ const StackNavigationData = [
     name: 'SingleProducts',
     title: '',
     component: SingleProductsMain,
+    headerRight: headerRightComponentSingle,
+    headerLeft: headerLeftComponent,
+    headerBackground: { source: headerBackground },
+    headerTitleStyle: {
+      fontFamily: fonts.primaryRegular,
+      fontSize: 18,
+    },
+  },
+  {
+    name: 'SearchProduct',
+    title: '',
+    component: SearchMain,
     headerRight: headerRightComponentSingle,
     headerLeft: headerLeftComponent,
     headerBackground: { source: headerBackground },

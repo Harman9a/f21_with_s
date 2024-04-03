@@ -8,29 +8,23 @@ import {
   TouchableOpacity,
   Image,
   Dimensions,
+  TextInput,
 } from 'react-native';
 import { colors, fonts } from '../../styles';
 import axios from 'axios';
 import { Link } from '@react-navigation/native';
 import { encode } from 'base-64';
+import { Button } from 'react-native-paper';
+import AntDesign from 'react-native-vector-icons/AntDesign';
 
 const AllProductsView = ({ navigation }) => {
   const [allProducts, setAllProducts] = useState();
+  const [textString, setTextString] = useState('');
 
-  useEffect(() => {
-    getAllProducts();
-  }, []);
-
-  const getAllProducts = () => {
-    const username = process.env.REACT_APP_USERNAME;
-    const password = process.env.REACT_APP_PASSWORD;
-
-    const credentials = `${username}:${password}`;
-    const encodedCredentials = encode(credentials);
-
+  const handleSearch = text => {
     axios
       .get(
-        `${process.env.REACT_APP_SEARCH_URL}/instantsearch?q=&collection=new-arrivals-dresses&apiKey=${process.env.REACT_APP_SEARCH_APIKEY}&country=AE&locale=en&getProductDescription=0&skip=0&take=30`,
+        `${process.env.REACT_APP_SEARCH_URL}/instantsearch?q=${text}&apiKey=${process.env.REACT_APP_SEARCH_APIKEY}&country=AE&locale=en&getProductDescription=0&skip=0&take=28`,
       )
       .then(res => {
         let productsArr = [];
@@ -54,6 +48,9 @@ const AllProductsView = ({ navigation }) => {
             productsArr.push(productsSubArr);
             productsSubArr = [];
             itemInOneRwo = 0;
+          }
+          if (res.data.data.items.length === 1) {
+            productsArr.push(productsSubArr);
           }
           itemInOneRwo++;
         });
@@ -102,6 +99,25 @@ const AllProductsView = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
+      <TextInput
+        autoCapitalize="none"
+        placeholder="Search by products & brands"
+        style={styles.inputField}
+        onChangeText={text => handleSearch(text)}
+      />
+
+      {/* <Button
+        mode="contained"
+        onPress={() => handleSearch()}
+        style={{
+          backgroundColor: 'black',
+          marginTop: 5,
+        }}
+        labelStyle={{ fontSize: 12 }}
+      >
+        fetch
+      </Button> */}
+
       <FlatList
         style={{ backgroundColor: colors.white, paddingHorizontal: 15 }}
         data={allProducts}
@@ -115,6 +131,15 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: colors.white,
+  },
+  inputField: {
+    height: 50,
+    borderWidth: 1,
+    borderColor: '#ABABAB',
+    borderRadius: 8,
+    padding: 15,
+    backgroundColor: '#fff',
+    margin: 10,
   },
   tabsContainer: {
     alignSelf: 'stretch',
