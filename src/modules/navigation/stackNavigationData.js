@@ -19,8 +19,9 @@ import { colors, fonts } from '../../styles';
 import AllProductsMain from '../../MainApp/Pages/AllProductsMain';
 import SingleProductsMain from '../../MainApp/Pages/SingleProductsMain';
 import SearchMain from '../../MainApp/Pages/SearchMain';
+import ListPageMain from '../../MainApp/Pages/ListPageMain';
 
-const headerLeftComponent = props => {
+export const headerLeftComponent = props => {
   return (
     <TouchableOpacity
       onPress={props.onPress}
@@ -33,7 +34,7 @@ const headerLeftComponent = props => {
     </TouchableOpacity>
   );
 };
-const headerRightComponentHome = props => {
+export const headerRightComponentHome = props => {
   return (
     <View style={{ flexDirection: 'row' }}>
       <TouchableOpacity onPress={props.onPress}>
@@ -53,12 +54,12 @@ const headerRightComponentHome = props => {
 const headerRightComponentFillter = props => {
   return (
     <View style={{ flexDirection: 'row' }}>
-      <TouchableOpacity onPress={props.onPress}>
+      <TouchableOpacity onPress={() => console.log(props)}>
         <View style={{ marginHorizontal: 10 }}>
           <MaterialIcons name="sort" size={25} />
         </View>
       </TouchableOpacity>
-      <TouchableOpacity onPress={props.onPress}>
+      <TouchableOpacity>
         <View style={{ marginHorizontal: 10 }}>
           <FontAwesome5 name="filter" size={25} />
         </View>
@@ -67,7 +68,7 @@ const headerRightComponentFillter = props => {
   );
 };
 
-const headerRightComponentSingle = props => {
+export const headerRightComponentSingle = props => {
   return (
     <View style={{ flexDirection: 'row' }}>
       <TouchableOpacity onPress={props.onPress}>
@@ -100,7 +101,7 @@ const StackNavigationData = [
     title: 'New arrival dresses',
     component: AllProductsMain,
     headerLeft: headerLeftComponent,
-    headerRight: headerRightComponentFillter,
+    headerRight: HeaderRightComponentFillter,
     headerBackground: { source: headerBackground },
     headerTitleStyle: {
       fontFamily: fonts.primaryRegular,
@@ -123,6 +124,18 @@ const StackNavigationData = [
     name: 'SearchProduct',
     title: '',
     component: SearchMain,
+    headerRight: headerRightComponentSingle,
+    headerLeft: headerLeftComponent,
+    headerBackground: { source: headerBackground },
+    headerTitleStyle: {
+      fontFamily: fonts.primaryRegular,
+      fontSize: 18,
+    },
+  },
+  {
+    name: 'ListPage',
+    title: '',
+    component: ListPageMain,
     headerRight: headerRightComponentSingle,
     headerLeft: headerLeftComponent,
     headerBackground: { source: headerBackground },

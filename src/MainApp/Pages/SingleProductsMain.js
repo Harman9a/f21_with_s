@@ -27,7 +27,7 @@ import {
 import ProductsScrollList from '../Components/ProductsScrollList';
 import RenderHTML from 'react-native-render-html';
 
-const AllProductsView = ({ route, navigation }) => {
+const SingleProductsMain = ({ route, navigation }) => {
   const [itemNo, setItemNo] = useState(1);
   const [product, setProduct] = useState([]);
   const [productPrice, setProductPrice] = useState(0);
@@ -484,4 +484,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default AllProductsView;
+export default SingleProductsMain;

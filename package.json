@@ -50,6 +50,7 @@
     "react-native-modal-datetime-picker": "^6.0.0",
     "react-native-modal-dropdown": "1.0.2",
     "react-native-paper": "^3.1.1",
+    "react-native-raw-bottom-sheet": "^3.0.0",
     "react-native-reanimated": "^1.13.4",
     "react-native-render-html": "^6.3.4",
     "react-native-safe-area-context": "^0.7.3",

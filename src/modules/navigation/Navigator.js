@@ -2,46 +2,43 @@ import * as React from 'react';
 import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native';
 import {
   createDrawerNavigator,
-  DrawerItem,
   DrawerContentScrollView,
 } from '@react-navigation/drawer';
 import NavigatorView from './RootNavigation';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 
-import { Button, RadioGroup, Dropdown } from '../../components';
+import MyCollapase from '../../MainApp/Components/MyCollapase';
 
-import AvailableInFullVersion from '../../modules/availableInFullVersion/AvailableInFullVersionViewContainer';
+const productDataWomen = [
+  { id: 269161136297, name: 'tops' },
+  { id: 404680999145, name: 't-shirt' },
+  { id: 268275810473, name: 'dresses' },
+  { id: 404680933609, name: 'shirts' },
+  { id: 400760078569, name: 'co-ords' },
+  { id: 269163102377, name: 'shorts' },
+  { id: 278854074537, name: 'bottomwear' },
+  { id: 269163036841, name: 'sweatshirts + hoodies' },
+  { id: 269163856041, name: 'jackets + outerwear' },
+  { id: 269162381481, name: 'rompers + jumpsuits' },
+  { id: 269163921577, name: 'lingrie & sleepwear' },
+  { id: 269162119337, name: 'sweaters + cardigains' },
+  { id: 269161234601, name: 'denim + jeans' },
+  { id: 269163954345, name: 'activewear' },
+  { id: 277361229993, name: 'swimwear' },
+];
 
-const iconHome = require('../../../assets/images/drawer/home.png');
-const iconCalendar = require('../../../assets/images/drawer/calendar.png');
-const iconGrids = require('../../../assets/images/drawer/grids.png');
-const iconPages = require('../../../assets/images/drawer/pages.png');
-const iconComponents = require('../../../assets/images/drawer/components.png');
-const iconSettings = require('../../../assets/images/drawer/settings.png');
-const iconBlog = require('../../../assets/images/drawer/blog.png');
-
-const drawerData = [
-  {
-    name: 'Home',
-    icon: iconHome,
-  },
-  {
-    name: 'Calendar',
-    icon: iconCalendar,
-  },
-  {
-    name: 'Grids',
-    icon: iconGrids,
-  },
-  {
-    name: 'Pages',
-    icon: iconPages,
-  },
-  {
-    name: 'Components',
-    icon: iconComponents,
-  },
+const occasionDataWomen = [
+  { id: 418409939177, name: 'Ramadan Collection' },
+  { id: 426572185833, name: 'Pre-Spring Collection' },
+  { id: 416139215081, name: 'party dresses' },
+  { id: 414274814185, name: 'Workwear' },
+  { id: 414269145321, name: 'Date Night' },
+  { id: 403737870569, name: 'Summer Wear' },
+  { id: 414460281065, name: 'Beach day' },
+  { id: 414279860457, name: 'Vacation' },
+  { id: 277535621289, name: 'Winter Wear' },
+  { id: 404885635305, name: 'Sleepwear' },
 ];
 
 const Drawer = createDrawerNavigator();
@@ -81,52 +78,81 @@ function CustomDrawerContent(props) {
             </View>
             <Icon name="angle-right" size={20} />
           </View>
-          {/* <Image
-            style={styles.avatar}
-            source={require('../../../assets/images/drawer/user.png')}
-          />
-          <View style={{ paddingLeft: 15 }}>
-            <Text style={styles.userName}>Harmanpreet Singh</Text>
-            <Text style={{ color: '#000', fontSize: 11 }}>
-              Save, Shop and View Orders
-            </Text>
-          </View> */}
         </View>
         <View style={styles.container}>
           <View style={styles.row}>
-            <TouchableOpacity style={styles.item}>
+            <TouchableOpacity
+              style={styles.item}
+              onPress={() =>
+                props.navigation.navigate('ListPage', {
+                  type: 'WOMEN',
+                  id: 268276990121,
+                })
+              }
+            >
               <Text style={styles.itemText}>WOMEN</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.item}>
+            <TouchableOpacity
+              style={styles.item}
+              onPress={() =>
+                props.navigation.navigate('ListPage', {
+                  type: 'MEN',
+                  id: 268277743785,
+                })
+              }
+            >
               <Text style={styles.itemText}>MEN</Text>
             </TouchableOpacity>
           </View>
           <View style={styles.row}>
-            <TouchableOpacity style={styles.item}>
+            <TouchableOpacity
+              style={styles.item}
+              onPress={() =>
+                props.navigation.navigate('ListPage', {
+                  type: 'Plus+Curve',
+                  id: 268277612713,
+                })
+              }
+            >
               <Text style={styles.itemText}>Plus+Curve</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.item}>
+            <TouchableOpacity
+              style={styles.item}
+              onPress={() =>
+                props.navigation.navigate('ListPage', {
+                  type: 'Beauty & Accessories',
+                  id: 271435530409,
+                })
+              }
+            >
               <Text style={styles.itemText}>Beauty & Accessories</Text>
             </TouchableOpacity>
           </View>
         </View>
         <View style={styles.container}>
-          <View style={styles.row}>
-            <View style={styles.menuItem}>
-              <Text style={styles.menuText}>shop by product</Text>
-            </View>
-            <View style={styles.menuItem}>
-              <Icon name="angle-right" size={20} />
-            </View>
+          <View style={styles.menuItem}>
+            <MyCollapase
+              title="shop by product"
+              list={productDataWomen}
+              navigation={props.navigation}
+            />
           </View>
-          <View style={styles.row}>
+          <View style={styles.menuItem}>
+            <MyCollapase
+              title="shop by occasion"
+              list={occasionDataWomen}
+              navigation={props.navigation}
+            />
+          </View>
+
+          {/* <View style={styles.row}>
             <View style={styles.menuItem}>
               <Text style={styles.menuText}>shop by occasion</Text>
             </View>
             <View style={styles.menuItem}>
               <Icon name="angle-right" size={20} />
             </View>
-          </View>
+          </View> */}
           <View style={styles.row}>
             <View style={styles.menuItem}>
               <Text style={styles.menuText}>shop by style</Text>

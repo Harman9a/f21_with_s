@@ -17,9 +17,13 @@ import { encode } from 'base-64';
 import { Button } from 'react-native-paper';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 
-const AllProductsView = ({ navigation }) => {
+const SearchMain = ({ navigation, route }) => {
   const [allProducts, setAllProducts] = useState();
   const [textString, setTextString] = useState('');
+
+  useEffect(() => {
+    console.log(route.params);
+  });
 
   const handleSearch = text => {
     axios
@@ -189,4 +193,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default AllProductsView;
+export default SearchMain;

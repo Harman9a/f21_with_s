@@ -7,7 +7,7 @@ import tabNavigationData from './tabNavigationData';
 
 const Tab = createBottomTabNavigator();
 
-export default function BottomTabs() {
+export default function BottomTabs(props) {
   return (
     <Tab.Navigator
       tabBarOptions={{ style: { height: Platform.OS === 'ios' ? 90 : 50 } }}

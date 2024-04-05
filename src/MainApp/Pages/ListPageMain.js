@@ -16,8 +16,10 @@ import RBSheet from 'react-native-raw-bottom-sheet';
 import { Divider, RadioButton } from 'react-native-paper';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 
-const AllProductsView = ({ navigation, route }) => {
+const ListPageMain = ({ navigation, route }) => {
   const [allProducts, setAllProducts] = useState();
+  const [collectionID, setCollectionID] = useState();
+  const [productType, setProductType] = useState();
   const [allProductsRaw, setAllProductsRaw] = useState();
   const [checked, setChecked] = React.useState('featured');
   const refRBSheet = useRef();
@@ -27,9 +29,8 @@ const AllProductsView = ({ navigation, route }) => {
   }, []);
 
   useEffect(() => {
-    if (route.params !== undefined) {
-      openBottomSheet();
-    }
+    setProductType(route.params.type);
+    setCollectionID(route.params.id);
   }, [route]);
 
   const openBottomSheet = () => {
@@ -65,6 +66,12 @@ const AllProductsView = ({ navigation, route }) => {
       itemInOneRwo++;
     });
 
+    if (productsSubArr.length >= 2) {
+      productsArr.push(productsSubArr);
+      productsSubArr = [];
+      itemInOneRwo = 0;
+    }
+
     setAllProducts(productsArr);
   };
 
@@ -77,7 +84,7 @@ const AllProductsView = ({ navigation, route }) => {
 
     axios
       .get(
-        `${process.env.REACT_APP_SEARCH_URL}/instantsearch?q=&collection=new-arrivals-dresses&apiKey=${process.env.REACT_APP_SEARCH_APIKEY}&country=AE&locale=en&getProductDescription=0&skip=0&take=30&${sort}`,
+        `${process.env.REACT_APP_SEARCH_URL}/search?q=&collection=${route.params.id}&apiKey=${process.env.REACT_APP_SEARCH_APIKEY}&country=AE&locale=en&getProductDescription=0&skip=0&take=30&${sort}`,
       )
       .then(res => {
         let items = res.data.data.items;
@@ -129,9 +136,6 @@ const AllProductsView = ({ navigation, route }) => {
     if (type == 'featured') {
       getAllProducts('');
     }
-    if (type == 'new') {
-      getAllProducts('sort=-date');
-    }
     if (type == 'lowprice') {
       getAllProducts('sort=price');
     }
@@ -163,18 +167,6 @@ const AllProductsView = ({ navigation, route }) => {
               value="featured"
               color="black"
               status={checked === 'featured' ? 'checked' : 'unchecked'}
-            />
-          </TouchableOpacity>
-
-          <TouchableOpacity
-            style={styles.radioItemContainer}
-            onPress={() => handleFilter('new')}
-          >
-            <Text style={styles.radioListItem}>New In</Text>
-            <RadioButton
-              value="new"
-              color="black"
-              status={checked === 'new' ? 'checked' : 'unchecked'}
             />
           </TouchableOpacity>
           <TouchableOpacity
@@ -220,7 +212,6 @@ const AllProductsView = ({ navigation, route }) => {
         ref={refRBSheet}
         animationType={'slide'}
         closeOnDragDown={true}
-        height={300}
         openDuration={300}
         closeDuration={300}
       >
@@ -293,4 +284,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default AllProductsView;
+export default ListPageMain;
