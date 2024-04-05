@@ -31,6 +31,9 @@ const ListPageMain = ({ navigation, route }) => {
   useEffect(() => {
     setProductType(route.params.type);
     setCollectionID(route.params.id);
+    if (route.params.toggleFilter !== undefined) {
+      openBottomSheet();
+    }
   }, [route]);
 
   const openBottomSheet = () => {

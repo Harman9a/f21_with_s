@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import {
   View,
   Text,
@@ -14,9 +15,11 @@ import {
 } from 'accordion-collapse-react-native';
 
 const MyCollapase = ({ title, list, navigation }) => {
+  const [active, setActive] = useState(false);
+
   return (
     <View>
-      <Collapse>
+      <Collapse onToggle={() => setActive(!active)}>
         <CollapseHeader>
           <View
             style={{
@@ -40,7 +43,11 @@ const MyCollapase = ({ title, list, navigation }) => {
               </Text>
             </View>
             <View>
-              <FontAwesome5 name="angle-right" size={15} />
+              {active === true ? (
+                <FontAwesome5 name="angle-down" size={15} />
+              ) : (
+                <FontAwesome5 name="angle-right" size={15} />
+              )}
             </View>
           </View>
         </CollapseHeader>

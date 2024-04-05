@@ -38,6 +38,9 @@ const SingleProductsMain = ({ route, navigation }) => {
     html: '',
   });
 
+  const [active, setActive] = useState(false);
+  const [active2, setActive2] = useState(false);
+
   const { productId } = route.params;
 
   useEffect(() => {
@@ -243,6 +246,7 @@ const SingleProductsMain = ({ route, navigation }) => {
                 borderColor: '#dbcccc',
                 marginVertical: 10,
               }}
+              onToggle={() => setActive(!active)}
             >
               <CollapseHeader>
                 <View
@@ -266,7 +270,11 @@ const SingleProductsMain = ({ route, navigation }) => {
                     </Text>
                   </View>
                   <View>
-                    <FontAwesome5 name="plus" size={15} />
+                    {active === true ? (
+                      <FontAwesome5 name="angle-down" size={15} />
+                    ) : (
+                      <FontAwesome5 name="angle-right" size={15} />
+                    )}
                   </View>
                 </View>
               </CollapseHeader>
@@ -326,6 +334,7 @@ const SingleProductsMain = ({ route, navigation }) => {
                 borderColor: '#dbcccc',
                 marginVertical: 10,
               }}
+              onToggle={() => setActive2(!active2)}
             >
               <CollapseHeader>
                 <View
@@ -349,7 +358,11 @@ const SingleProductsMain = ({ route, navigation }) => {
                     </Text>
                   </View>
                   <View>
-                    <FontAwesome5 name="plus" size={15} />
+                    {active2 === true ? (
+                      <FontAwesome5 name="angle-down" size={15} />
+                    ) : (
+                      <FontAwesome5 name="angle-right" size={15} />
+                    )}
                   </View>
                 </View>
               </CollapseHeader>

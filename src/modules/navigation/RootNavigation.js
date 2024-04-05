@@ -78,12 +78,19 @@ export default function NavigatorView(props) {
     );
   };
 
-  const headerRightComponentSingle = props => {
+  const headerRightComponentSingle = () => {
     return (
       <View style={{ flexDirection: 'row' }}>
-        <TouchableOpacity onPress={props.onPress}>
+        <TouchableOpacity
+          onPress={() => {
+            setToggleFilter(!toggleFilter);
+            props.navigation.navigate('ListPage', {
+              toggleFilter: toggleFilter,
+            });
+          }}
+        >
           <View style={{ marginHorizontal: 10 }}>
-            <FontAwesome5 name="shopping-bag" size={25} />
+            <MaterialIcons name="sort" size={25} />
           </View>
         </TouchableOpacity>
       </View>
@@ -137,7 +144,7 @@ export default function NavigatorView(props) {
         options={{
           headerTitle: '',
           headerLeft: headerLeftComponent,
-          headerRight: headerRightComponentSingle,
+          headerRight: null,
           headerTitleStyle: {
             fontFamily: fonts.primaryRegular,
             fontSize: 18,
