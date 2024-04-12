@@ -26,6 +26,8 @@ import {
 } from 'accordion-collapse-react-native';
 import ProductsScrollList from '../Components/ProductsScrollList';
 import RenderHTML from 'react-native-render-html';
+import { useSelector, useDispatch } from 'react-redux';
+import { id } from 'deprecated-react-native-prop-types/DeprecatedTextPropTypes';
 
 const SingleProductsMain = ({ route, navigation }) => {
   const [itemNo, setItemNo] = useState(1);
@@ -40,12 +42,25 @@ const SingleProductsMain = ({ route, navigation }) => {
 
   const [active, setActive] = useState(false);
   const [active2, setActive2] = useState(false);
+  const [itemAdd, setItemAdd] = useState(false);
 
   const { productId } = route.params;
 
+  const State = useSelector(state => state.CartReducer.Cart);
+
   useEffect(() => {
     getAllProducts();
+    checkCart();
   }, []);
+
+  const checkCart = () => {
+    let item = State.find(x => x.id === productId);
+    if (item) {
+      setItemAdd(true);
+    } else {
+      setItemAdd(false);
+    }
+  };
 
   const getAllProducts = () => {
     const username = process.env.REACT_APP_USERNAME;
@@ -127,6 +142,23 @@ const SingleProductsMain = ({ route, navigation }) => {
     }
   };
 
+  const dispatch = useDispatch();
+
+  const handleAddToCart = () => {
+    dispatch({
+      type: 'ADD_ITEM',
+      payload: {
+        id: productId,
+        name: product.title,
+        image: product.images[0].src,
+        size: productOptions[0].activeValue,
+        color: productOptions[1].activeValue,
+        price: productPrice,
+        quantity: 1,
+      },
+    });
+    setItemAdd(true);
+  };
   return (
     <View style={{ flex: 1 }}>
       <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
@@ -405,36 +437,54 @@ const SingleProductsMain = ({ route, navigation }) => {
         </View>
       </ScrollView>
       <View style={styles.bottomBar}>
-        <View
-          style={{
-            flexDirection: 'row',
-            alignItems: 'center',
-            justifyContent: 'space-between',
-          }}
-        >
-          <Button
-            mode="contained"
-            onPress={() => handleChangeItem(0)}
-            style={styles.addToCartButton2}
+        {itemAdd === false ? (
+          <View
+            style={{
+              flexDirection: 'row',
+              alignItems: 'center',
+              justifyContent: 'space-between',
+            }}
           >
-            <FontAwesome5 name="minus" size={10} color="black" />
-          </Button>
-          <Text style={{ fontSize: 18, fontWeight: '600' }}>{itemNo}</Text>
-          <Button
-            mode="contained"
-            onPress={() => handleChangeItem(1)}
-            style={styles.addToCartButton2}
+            <Button
+              mode="contained"
+              onPress={() => handleChangeItem(0)}
+              style={styles.addToCartButton2}
+            >
+              <FontAwesome5 name="minus" size={10} color="black" />
+            </Button>
+            <Text style={{ fontSize: 18, fontWeight: '600' }}>{itemNo}</Text>
+            <Button
+              mode="contained"
+              onPress={() => handleChangeItem(1)}
+              style={styles.addToCartButton2}
+            >
+              <FontAwesome5 name="plus" size={10} color="black" />
+            </Button>
+            <Button
+              mode="contained"
+              onPress={() => handleAddToCart()}
+              style={styles.addToCartButton}
+            >
+              Add to Bag
+            </Button>
+          </View>
+        ) : (
+          <View
+            style={{
+              flexDirection: 'row',
+              alignItems: 'center',
+              justifyContent: 'space-between',
+            }}
           >
-            <FontAwesome5 name="plus" size={10} color="black" />
-          </Button>
-          <Button
-            mode="contained"
-            onPress={() => console.log('Add to cart pressed')}
-            style={styles.addToCartButton}
-          >
-            Add to Bag
-          </Button>
-        </View>
+            <Button
+              mode="contained"
+              onPress={() => navigation.navigate('Cart', {})}
+              style={styles.addToCartButtonBag}
+            >
+              Go to Bag
+            </Button>
+          </View>
+        )}
       </View>
     </View>
   );
@@ -489,6 +539,11 @@ const styles = StyleSheet.create({
   addToCartButton: {
     backgroundColor: 'black',
     width: '50%',
+    padding: 7,
+  },
+  addToCartButtonBag: {
+    backgroundColor: 'black',
+    width: '100%',
     padding: 7,
   },
   addToCartButton2: {

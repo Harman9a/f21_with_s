@@ -11,6 +11,7 @@ import SingleProductsMain from '../../MainApp/Pages/SingleProductsMain';
 import SearchMain from '../../MainApp/Pages/SearchMain';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import ListPageMain from '../../MainApp/Pages/ListPageMain';
+import CartMain from '../../MainApp/Pages/CartMain';
 
 const Stack = createStackNavigator();
 
@@ -37,15 +38,20 @@ export default function NavigatorView(props) {
     );
   };
 
-  const headerRightComponentHome = props => {
+  const headerRightComponentHome = () => {
     return (
       <View style={{ flexDirection: 'row' }}>
-        <TouchableOpacity onPress={props.onPress}>
+        <TouchableOpacity>
           <View style={{ marginHorizontal: 10 }}>
             <FontAwesome5 name="heart" size={25} />
           </View>
         </TouchableOpacity>
-        <TouchableOpacity onPress={props.onPress}>
+        <TouchableOpacity
+          onPress={() => {
+            setToggleFilter(!toggleFilter);
+            props.navigation.navigate('Cart', {});
+          }}
+        >
           <View style={{ marginHorizontal: 10 }}>
             <FontAwesome5 name="shopping-bag" size={25} />
           </View>
@@ -91,6 +97,22 @@ export default function NavigatorView(props) {
         >
           <View style={{ marginHorizontal: 10 }}>
             <MaterialIcons name="sort" size={25} />
+          </View>
+        </TouchableOpacity>
+      </View>
+    );
+  };
+
+  const headerRightComponentCart = () => {
+    return (
+      <View style={{ flexDirection: 'row' }}>
+        <TouchableOpacity
+          onPress={() => {
+            props.navigation.navigate('Cart', {});
+          }}
+        >
+          <View style={{ marginHorizontal: 10 }}>
+            <FontAwesome5 name="shopping-bag" size={25} />
           </View>
         </TouchableOpacity>
       </View>
@@ -144,7 +166,7 @@ export default function NavigatorView(props) {
         options={{
           headerTitle: '',
           headerLeft: headerLeftComponent,
-          headerRight: null,
+          headerRight: headerRightComponentCart,
           headerTitleStyle: {
             fontFamily: fonts.primaryRegular,
             fontSize: 18,
@@ -170,7 +192,20 @@ export default function NavigatorView(props) {
         options={{
           headerTitle: '',
           headerLeft: headerLeftComponent,
-          headerRight: headerRightComponentFillter,
+          headerRight: null,
+          headerTitleStyle: {
+            fontFamily: fonts.primaryRegular,
+            fontSize: 18,
+          },
+        }}
+      />
+      <Stack.Screen
+        name="Cart"
+        component={CartMain}
+        options={{
+          headerTitle: '',
+          headerLeft: headerLeftComponent,
+          headerRight: null,
           headerTitleStyle: {
             fontFamily: fonts.primaryRegular,
             fontSize: 18,
