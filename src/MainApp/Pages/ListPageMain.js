@@ -21,7 +21,7 @@ const ListPageMain = ({ navigation, route }) => {
   const [collectionID, setCollectionID] = useState();
   const [productType, setProductType] = useState();
   const [allProductsRaw, setAllProductsRaw] = useState();
-  const [checked, setChecked] = React.useState('featured');
+  const [checked, setChecked] = React.useState('new');
   const refRBSheet = useRef();
 
   useEffect(() => {
@@ -78,7 +78,7 @@ const ListPageMain = ({ navigation, route }) => {
     setAllProducts(productsArr);
   };
 
-  const getAllProducts = (sort = '') => {
+  const getAllProducts = (sort = 'sort=-date') => {
     const username = process.env.REACT_APP_USERNAME;
     const password = process.env.REACT_APP_PASSWORD;
 
@@ -139,6 +139,9 @@ const ListPageMain = ({ navigation, route }) => {
     if (type == 'featured') {
       getAllProducts('');
     }
+    if (type == 'new') {
+      getAllProducts('sort=-date');
+    }
     if (type == 'lowprice') {
       getAllProducts('sort=price');
     }
@@ -170,6 +173,17 @@ const ListPageMain = ({ navigation, route }) => {
               value="featured"
               color="black"
               status={checked === 'featured' ? 'checked' : 'unchecked'}
+            />
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.radioItemContainer}
+            onPress={() => handleFilter('new')}
+          >
+            <Text style={styles.radioListItem}>New In</Text>
+            <RadioButton
+              value="new"
+              color="black"
+              status={checked === 'new' ? 'checked' : 'unchecked'}
             />
           </TouchableOpacity>
           <TouchableOpacity
@@ -216,6 +230,7 @@ const ListPageMain = ({ navigation, route }) => {
         animationType={'slide'}
         closeOnDragDown={true}
         openDuration={300}
+        height={300}
         closeDuration={300}
       >
         <BootomSheetFilter />

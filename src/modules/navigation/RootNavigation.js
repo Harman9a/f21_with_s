@@ -12,6 +12,8 @@ import SearchMain from '../../MainApp/Pages/SearchMain';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import ListPageMain from '../../MainApp/Pages/ListPageMain';
 import CartMain from '../../MainApp/Pages/CartMain';
+import Wishlist from '../../MainApp/Pages/WishlistMain';
+import Homepage_new from '../../MainApp/Pages/Homepage_new';
 
 const Stack = createStackNavigator();
 
@@ -43,12 +45,17 @@ export default function NavigatorView(props) {
       <View style={{ flexDirection: 'row' }}>
         <TouchableOpacity>
           <View style={{ marginHorizontal: 10 }}>
-            <FontAwesome5 name="heart" size={25} />
+            <FontAwesome5
+              name="heart"
+              size={25}
+              onPress={() => {
+                props.navigation.navigate('Wishlist', {});
+              }}
+            />
           </View>
         </TouchableOpacity>
         <TouchableOpacity
           onPress={() => {
-            setToggleFilter(!toggleFilter);
             props.navigation.navigate('Cart', {});
           }}
         >
@@ -134,7 +141,7 @@ export default function NavigatorView(props) {
   };
   return (
     <Stack.Navigator>
-      <Stack.Screen
+      {/* <Stack.Screen
         name="Froever 21"
         component={TabNavigator}
         options={{
@@ -145,6 +152,13 @@ export default function NavigatorView(props) {
             fontFamily: fonts.primaryRegular,
             fontSize: 18,
           },
+        }}
+      /> */}
+      <Stack.Screen
+        name="Froever 21"
+        component={TabNavigator}
+        options={{
+          header: () => null,
         }}
       />
       <Stack.Screen
@@ -202,6 +216,19 @@ export default function NavigatorView(props) {
       <Stack.Screen
         name="Cart"
         component={CartMain}
+        options={{
+          headerTitle: '',
+          headerLeft: headerLeftComponent,
+          headerRight: null,
+          headerTitleStyle: {
+            fontFamily: fonts.primaryRegular,
+            fontSize: 18,
+          },
+        }}
+      />
+      <Stack.Screen
+        name="Wishlist"
+        component={Wishlist}
         options={{
           headerTitle: '',
           headerLeft: headerLeftComponent,

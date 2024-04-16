@@ -38,6 +38,13 @@ const CartMain = () => {
     setCartItems(newCart);
   };
 
+  const handleMoveWishlist = item => {
+    dispatch({
+      type: 'MOVE_TO_WISHLIST',
+      payload: item,
+    });
+  };
+
   return (
     <View>
       <ScrollView
@@ -91,7 +98,7 @@ const CartMain = () => {
                 <TouchableOpacity onPress={() => removeItem(item)}>
                   <Text>Remove</Text>
                 </TouchableOpacity>
-                <TouchableOpacity>
+                <TouchableOpacity onPress={() => handleMoveWishlist(item)}>
                   <Text>Move To Wishlist</Text>
                 </TouchableOpacity>
               </View>

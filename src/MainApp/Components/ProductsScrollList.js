@@ -12,7 +12,7 @@ import { ScrollView } from 'react-native-gesture-handler';
 import { encode } from 'base-64';
 import { colors, fonts } from '../../styles';
 
-const ProductsScrollList = ({ navigation }) => {
+const ProductsScrollList = ({ navigation, collection }) => {
   const [allProducts, setAllProducts] = useState([]);
 
   useEffect(() => {
@@ -22,7 +22,7 @@ const ProductsScrollList = ({ navigation }) => {
   const getAllProducts = () => {
     axios
       .get(
-        `${process.env.REACT_APP_SEARCH_URL}/instantsearch?q=&collection=new-arrivals-dresses&apiKey=${process.env.REACT_APP_SEARCH_APIKEY}&country=AE&locale=en&getProductDescription=0&skip=0&take=28`,
+        `${process.env.REACT_APP_SEARCH_URL}/instantsearch?q=&collection=${collection}&apiKey=${process.env.REACT_APP_SEARCH_APIKEY}&country=AE&locale=en&getProductDescription=0&skip=0&take=28`,
       )
       .then(res => {
         setAllProducts(res.data.data.items);
@@ -79,6 +79,30 @@ const ProductsScrollList = ({ navigation }) => {
           );
         }
       })}
+      <TouchableOpacity
+        onPress={() => {
+          /* 1. Navigate to the Details route with params */
+          navigation.navigate('ListPage', {
+            type: 'WOMEN',
+            id: collection,
+          });
+        }}
+      >
+        <View style={styles.itemOneContainer}>
+          <View
+            style={{
+              flexDirection: 'row',
+              alignItems: 'center',
+              justifyContent: 'center',
+              height: '80%',
+            }}
+          >
+            <Text style={{ color: 'black', fontSize: 15 }} numberOfLines={1}>
+              VIEW ALL
+            </Text>
+          </View>
+        </View>
+      </TouchableOpacity>
     </ScrollView>
   );
 };

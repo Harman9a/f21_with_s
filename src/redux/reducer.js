@@ -5,6 +5,7 @@ import gallery from '../modules/gallery/GalleryState';
 import app from '../modules/AppState';
 import calendar from '../modules/calendar/CalendarState';
 import CartReducer from './Cart';
+import WishListReducer from './Wishlist';
 
 export default combineReducers({
   // ## Generator Reducers
@@ -12,4 +13,5 @@ export default combineReducers({
   app,
   calendar,
   CartReducer,
+  WishListReducer,
 });

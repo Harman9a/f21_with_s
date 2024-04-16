@@ -35,8 +35,7 @@ const MyCollapase = ({ title, list, navigation }) => {
                 style={{
                   // fontSize: 16,
                   color: 'black',
-                  fontWeight: '400',
-                  textTransform: 'uppercase',
+                  fontWeight: '600',
                 }}
               >
                 {title}
@@ -68,10 +67,10 @@ const MyCollapase = ({ title, list, navigation }) => {
                     style={{
                       fontSize: 14,
                       color: 'black',
-                      textTransform: 'uppercase',
+
                       fontWeight: 400,
                       marginHorizontal: 10,
-                      marginVertical: 5,
+                      marginVertical: 10,
                     }}
                   >
                     {item.name}

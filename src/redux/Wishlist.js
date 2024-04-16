@@ -4,17 +4,17 @@ const initialState = {
 
 const WishListReducer = (state = initialState, action) => {
   switch (action.type) {
-    case 'ADD_ITEM':
+    case 'MOVE_TO_WISHLIST':
       return {
         ...state,
         WishList: [...state.WishList, action.payload],
       };
-    case 'REMOVE_ITEM':
+    case 'REMOVE_WISHLIST_ITEM':
       return {
         ...state,
         WishList: state.WishList.filter(item => item.id !== action.payload),
       };
-    case 'EMPTY_WishList':
+    case 'EMPTY_WISHLIST':
       return {
         ...state,
         WishList: [],
