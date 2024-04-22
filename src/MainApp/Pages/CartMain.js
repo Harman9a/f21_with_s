@@ -6,8 +6,10 @@ import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import { TouchableOpacity } from 'react-native-ui-lib';
 import { caretHidden } from 'deprecated-react-native-prop-types/DeprecatedTextInputPropTypes';
 import { ScrollView } from 'react-native-gesture-handler';
+import AppBarMain from '../Components/AppBarMain';
+import { Link } from '@react-navigation/native';
 
-const CartMain = () => {
+const CartMain = props => {
   const [CartItems, setCartItems] = useState([]);
   const State = useSelector(state => state.CartReducer.Cart);
 
@@ -15,7 +17,7 @@ const CartMain = () => {
 
   useEffect(() => {
     getCartItems();
-  }, []);
+  });
 
   const getCartItems = () => {
     setCartItems(State);
@@ -45,8 +47,29 @@ const CartMain = () => {
     });
   };
 
+  const EmptyScreen = () => (
+    <View style={styles.emptyContainer}>
+      <Text style={styles.emptyText}>Your Bag is empty</Text>
+      <Text style={styles.emptyText2}>
+        You can add item to your cart by clicking "Add to Bag"
+      </Text>
+      <Button
+        mode="contained"
+        style={styles.emptyButton}
+        labelStyle={styles.emptyButtonText}
+        contentStyle={styles.emptyButtonContent}
+        onPress={() => {
+          props.navigation.navigate('Home');
+        }}
+      >
+        Continue Shopping
+      </Button>
+    </View>
+  );
+
   return (
     <View>
+      <AppBarMain title="Cart" />
       <ScrollView
         contentContainerStyle={{ flexGrow: 1 }}
         style={styles.container}
@@ -60,6 +83,11 @@ const CartMain = () => {
           Clear
         </Button> */}
         </View>
+        {CartItems.length == 0 ? (
+          <View>
+            <EmptyScreen />
+          </View>
+        ) : null}
         {CartItems.map((item, index) => (
           <View key={index}>
             <View
@@ -94,6 +122,7 @@ const CartMain = () => {
               </View> */}
                 </View>
               </View>
+
               <View style={styles.cartItemButtonsContainer}>
                 <TouchableOpacity onPress={() => removeItem(item)}>
                   <Text>Remove</Text>
@@ -107,23 +136,25 @@ const CartMain = () => {
         ))}
       </ScrollView>
 
-      <View style={styles.bottomBar}>
-        <View
-          style={{
-            flexDirection: 'row',
-            alignItems: 'center',
-            justifyContent: 'space-between',
-          }}
-        >
-          <Button
-            mode="contained"
-            onPress={() => console.log('center')}
-            style={styles.addToCartButtonBag}
+      {CartItems.length == 0 ? null : (
+        <View style={styles.bottomBar}>
+          <View
+            style={{
+              flexDirection: 'row',
+              alignItems: 'center',
+              justifyContent: 'space-between',
+            }}
           >
-            Proceed To Checkout
-          </Button>
+            <Button
+              mode="contained"
+              onPress={() => console.log('center')}
+              style={styles.addToCartButtonBag}
+            >
+              Proceed To Checkout
+            </Button>
+          </View>
         </View>
-      </View>
+      )}
     </View>
   );
 };
@@ -182,18 +213,44 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-around',
   },
-
   bottomBar: {
     position: 'absolute',
-    bottom: 0,
+    bottom: 50,
     width: '100%',
-
     paddingVertical: 20,
     paddingHorizontal: 20,
-    // borderTopWidth: 1,
     borderTopColor: '#ccc',
   },
   container: {
     height: Dimensions.get('window').height - 50,
+  },
+  emptyContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    height: Dimensions.get('window').height - 150,
+  },
+  emptyText: {
+    fontSize: 20,
+    fontWeight: 'bold',
+  },
+  emptyText2: {
+    fontSize: 18,
+    width: '80%',
+    justifyContent: 'center',
+    textAlign: 'center',
+    marginTop: 10,
+  },
+  emptyButton: {
+    width: '80%',
+    marginHorizontal: 10,
+    marginVertical: 20,
+    backgroundColor: 'black',
+  },
+  emptyButtonText: {
+    fontSize: 16,
+  },
+  emptyButtonContent: {
+    fontSize: 16,
   },
 });

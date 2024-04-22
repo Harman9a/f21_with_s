@@ -5,7 +5,7 @@ import AccountMain from '../../MainApp/Pages/AccountMain';
 import NotificationMain from '../../MainApp/Pages/NotificationMain';
 import Homepage_new from '../../MainApp/Pages/Homepage_new';
 import CartMain from '../../MainApp/Pages/CartMain';
-import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
+import FontAwesome5 from 'react-native-vector-icons/SimpleLineIcons';
 
 const tabNavigationData = [
   {
@@ -21,7 +21,7 @@ const tabNavigationData = [
   {
     name: 'Cart',
     component: CartMain,
-    icon: <FontAwesome5 name="shopping-bag" size={25} />,
+    icon: <FontAwesome5 name="handbag" size={25} />,
   },
   {
     name: 'Account',

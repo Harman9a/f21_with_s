@@ -2,15 +2,15 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import {
   Dimensions,
-  Image,
   StyleSheet,
   Text,
   TouchableOpacity,
   View,
 } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
-import { encode } from 'base-64';
+
 import { colors, fonts } from '../../styles';
+import ProductCompDesign from './ProductCompDesign';
 
 const ProductsScrollList = ({ navigation, collection }) => {
   const [allProducts, setAllProducts] = useState([]);
@@ -39,8 +39,6 @@ const ProductsScrollList = ({ navigation, collection }) => {
       contentContainerStyle={{
         alignItems: 'center',
         gap: 10,
-        paddingHorizontal: 10,
-        marginVertical: 20,
       }}
     >
       {allProducts.map((product, i) => {
@@ -49,14 +47,19 @@ const ProductsScrollList = ({ navigation, collection }) => {
             <TouchableOpacity
               key={i}
               onPress={() => {
-                /* 1. Navigate to the Details route with params */
                 navigation.navigate('SingleProducts', {
                   productId: product.id,
                 });
               }}
             >
-              {/* <Link to="/SingleProducts"> */}
-              <View style={styles.itemOneContainer}>
+              <ProductCompDesign
+                key={'index'}
+                id={product.id}
+                name={product.title}
+                image={'https://' + product.images[0].url}
+                price={`AED ${product.variants[0].price}`}
+              />
+              {/* <View style={styles.itemOneContainer}>
                 <View style={styles.itemOneImageContainer}>
                   <Image
                     style={styles.itemOneImage}
@@ -73,8 +76,7 @@ const ProductsScrollList = ({ navigation, collection }) => {
                     AED {product.variants[0].price}
                   </Text>
                 </View>
-              </View>
-              {/* </Link> */}
+              </View> */}
             </TouchableOpacity>
           );
         }

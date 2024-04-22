@@ -15,6 +15,7 @@ import { encode } from 'base-64';
 import RBSheet from 'react-native-raw-bottom-sheet';
 import { Divider, RadioButton } from 'react-native-paper';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import ProductCompDesign from '../Components/ProductCompDesign';
 
 const ListPageMain = ({ navigation, route }) => {
   const [allProducts, setAllProducts] = useState();
@@ -104,14 +105,19 @@ const ListPageMain = ({ navigation, route }) => {
       <TouchableOpacity
         key={item.id}
         onPress={() => {
-          /* 1. Navigate to the Details route with params */
           navigation.navigate('SingleProducts', {
             productId: item.productId,
           });
         }}
       >
-        {/* <Link to="/SingleProducts"> */}
-        <View style={styles.itemOneContainer}>
+        <ProductCompDesign
+          key={'index'}
+          id={item.productId}
+          name={item.title}
+          image={item.image}
+          price={item.price}
+        />
+        {/* <View style={styles.itemOneContainer}>
           <View style={styles.itemOneImageContainer}>
             <Image style={styles.itemOneImage} source={{ uri: item.image }} />
           </View>
@@ -123,8 +129,7 @@ const ListPageMain = ({ navigation, route }) => {
               {item.price}
             </Text>
           </View>
-        </View>
-        {/* </Link> */}
+        </View> */}
       </TouchableOpacity>
     ));
     return (

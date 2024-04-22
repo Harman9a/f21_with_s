@@ -14,6 +14,7 @@ import ListPageMain from '../../MainApp/Pages/ListPageMain';
 import CartMain from '../../MainApp/Pages/CartMain';
 import Wishlist from '../../MainApp/Pages/WishlistMain';
 import Homepage_new from '../../MainApp/Pages/Homepage_new';
+import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons';
 
 const Stack = createStackNavigator();
 
@@ -119,7 +120,7 @@ export default function NavigatorView(props) {
           }}
         >
           <View style={{ marginHorizontal: 10 }}>
-            <FontAwesome5 name="shopping-bag" size={25} />
+            <SimpleLineIcons name="handbag" size={25} />
           </View>
         </TouchableOpacity>
       </View>
@@ -155,7 +156,7 @@ export default function NavigatorView(props) {
         }}
       /> */}
       <Stack.Screen
-        name="Froever 21"
+        name="Froever"
         component={TabNavigator}
         options={{
           header: () => null,
@@ -213,7 +214,7 @@ export default function NavigatorView(props) {
           },
         }}
       />
-      <Stack.Screen
+      {/* <Stack.Screen
         name="Cart"
         component={CartMain}
         options={{
@@ -225,7 +226,7 @@ export default function NavigatorView(props) {
             fontSize: 18,
           },
         }}
-      />
+      /> */}
       <Stack.Screen
         name="Wishlist"
         component={Wishlist}

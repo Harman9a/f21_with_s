@@ -1,8 +1,13 @@
-import { View, StyleSheet, ScrollView } from 'react-native';
+import {
+  View,
+  StyleSheet,
+  ScrollView,
+  TouchableOpacity,
+  Text,
+} from 'react-native';
 import React from 'react';
 import AppBarMain from '../Components/AppBarMain';
 import MyCollapase from '../Components/MyCollapase';
-import { Searchbar } from 'react-native-paper';
 
 const CategotiesMain = props => {
   const productDataWomen = [
@@ -73,20 +78,63 @@ const CategotiesMain = props => {
     { id: 414268588265, name: 'AED 70 & Under' },
   ];
 
-  const [searchQuery, setSearchQuery] = React.useState('');
   return (
     <View>
       <AppBarMain title="Categories" />
       <View>
         <ScrollView>
           <View style={styles.container}>
-            <View>
-              <Searchbar
-                placeholder="Search"
-                onChangeText={setSearchQuery}
-                value={searchQuery}
-              />
+            <View style={styles.row}>
+              <TouchableOpacity
+                style={styles.item}
+                onPress={() =>
+                  props.navigation.navigate('ListPage', {
+                    type: 'WOMEN',
+                    id: 268276990121,
+                  })
+                }
+              >
+                <Text style={styles.itemText}>WOMEN</Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={styles.item}
+                onPress={() =>
+                  props.navigation.navigate('ListPage', {
+                    type: 'MEN',
+                    id: 268277743785,
+                  })
+                }
+              >
+                <Text style={styles.itemText}>MEN</Text>
+              </TouchableOpacity>
             </View>
+            <View style={styles.row}>
+              <TouchableOpacity
+                style={styles.item}
+                onPress={() =>
+                  props.navigation.navigate('ListPage', {
+                    type: 'Plus+Curve',
+                    id: 268277612713,
+                  })
+                }
+              >
+                <Text style={styles.itemText}>Plus+Curve</Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={styles.item}
+                onPress={() =>
+                  props.navigation.navigate('ListPage', {
+                    type: 'Beauty & Accessories',
+                    id: 271435530409,
+                  })
+                }
+              >
+                <Text style={styles.itemText}>Beauty & Accessories</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+          <View style={styles.container}>
+            <View></View>
             <View style={styles.menuItem}>
               <MyCollapase
                 title="SHOP BY PRODUCT"
@@ -145,5 +193,66 @@ const styles = StyleSheet.create({
   },
   menuItem: {
     padding: 10,
+  },
+  menuTitle: {
+    marginLeft: 10,
+    color: '#000',
+  },
+  menuLabelFlex: {
+    display: 'flex',
+    flexDirection: 'row',
+  },
+  userName: {
+    color: '#000',
+    fontSize: 18,
+  },
+  divider: {
+    borderBottomColor: '#735f5fc9',
+    opacity: 0.2,
+    borderBottomWidth: 1,
+    margin: 15,
+  },
+  avatar: {
+    width: 40,
+    height: 40,
+    borderRadius: 20,
+  },
+  avatarContainer: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'flex-start',
+    alignItems: 'center',
+    margin: 10,
+    borderWidth: 0.5,
+    borderColor: '#735f5fc9',
+    padding: 15,
+    borderRadius: 8,
+  },
+
+  row: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    paddingHorizontal: 10,
+    marginVertical: 5,
+  },
+  item: {
+    flex: 1,
+    height: 55,
+    borderColor: 'black',
+    backgroundColor: 'black',
+    color: 'white',
+    borderWidth: 1,
+    borderRadius: 5,
+    alignItems: 'center',
+    justifyContent: 'space-around',
+    marginHorizontal: 5,
+  },
+
+  itemText: {
+    color: 'white',
+  },
+  menuText: {
+    textTransform: 'uppercase',
+    color: 'black',
   },
 });

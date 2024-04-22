@@ -15,9 +15,11 @@ import { TouchableOpacity } from 'react-native-ui-lib';
 import { SliderBox } from 'react-native-image-slider-box';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import ProductsScrollList from '../Components/ProductsScrollList';
-import { Button } from 'react-native-paper';
+import { Badge, Button } from 'react-native-paper';
+import { useSelector } from 'react-redux';
 
 export default function Homepage_new({ navigation }) {
+  const State = useSelector(state => state.WishListReducer.WishList);
   const collectionArr = [
     {
       id: 1,
@@ -104,13 +106,18 @@ export default function Homepage_new({ navigation }) {
           onPress={() => navigation.navigate('SearchProduct')}
           style={{ width: '10%' }}
         >
-          <FontAwesome5
-            name="heart"
-            size={25}
-            onPress={() => {
-              navigation.navigate('Wishlist', {});
-            }}
-          />
+          <View style={{ position: 'relative' }}>
+            <Badge style={{ position: 'absolute', top: -10, right: 6 }}>
+              {State.length}
+            </Badge>
+            <FontAwesome5
+              name="heart"
+              size={25}
+              onPress={() => {
+                navigation.navigate('Wishlist', {});
+              }}
+            />
+          </View>
         </TouchableOpacity>
       </View>
       <ScrollView>

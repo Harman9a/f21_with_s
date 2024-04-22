@@ -22,8 +22,9 @@ export default function BottomTabs(props) {
             tabBarLabel: ({ focused }) => (
               <Text
                 style={{
-                  fontSize: 12,
-                  color: focused ? colors.primary : colors.gray,
+                  fontSize: 14,
+                  color: focused ? 'black' : colors.gray,
+                  fontWeight: focused ? '600' : '400',
                 }}
               >
                 {item.name}

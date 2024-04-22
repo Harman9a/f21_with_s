@@ -2,18 +2,13 @@ import React, { useState, useEffect } from 'react';
 import {
   StyleSheet,
   View,
-  Platform,
   Text,
   FlatList,
-  TouchableOpacity,
-  Image,
   Dimensions,
   ScrollView,
   useWindowDimensions,
 } from 'react-native';
-import { colors, fonts } from '../../styles';
 import axios from 'axios';
-import { Link } from '@react-navigation/native';
 import { SliderBox } from 'react-native-image-slider-box';
 import { encode } from 'base-64';
 import { Button } from 'react-native-paper';
@@ -22,12 +17,10 @@ import {
   Collapse,
   CollapseHeader,
   CollapseBody,
-  AccordionList,
 } from 'accordion-collapse-react-native';
 import ProductsScrollList from '../Components/ProductsScrollList';
 import RenderHTML from 'react-native-render-html';
 import { useSelector, useDispatch } from 'react-redux';
-import { id } from 'deprecated-react-native-prop-types/DeprecatedTextPropTypes';
 
 const SingleProductsMain = ({ route, navigation }) => {
   const [itemNo, setItemNo] = useState(1);
@@ -92,8 +85,10 @@ const SingleProductsMain = ({ route, navigation }) => {
         });
         setProduct(product);
         setProductPrice(product.variants[0].price);
+
         setProductPriceCom(product.variants[0].compare_at_price);
         setProductImages(allImages);
+
         setProductOptions(options);
         setProductDetails({
           html: product.body_html,
@@ -189,27 +184,41 @@ const SingleProductsMain = ({ route, navigation }) => {
               {product.title}
             </Text>
             <View style={{ flexDirection: 'row' }}>
-              <Text
-                style={{
-                  fontSize: 18,
-                  color: 'black',
-                  fontWeight: '600',
-                  marginHorizontal: 5,
-                  textDecorationLine: 'line-through',
-                }}
-              >
-                AED {productPriceCom}
-              </Text>
-              <Text
-                style={{
-                  fontSize: 18,
-                  color: 'red',
-                  fontWeight: '700',
-                  marginHorizontal: 5,
-                }}
-              >
-                AED {productPrice}
-              </Text>
+              {productPriceCom == null ? (
+                <Text
+                  style={{
+                    fontSize: 18,
+                    fontWeight: '700',
+                    marginHorizontal: 5,
+                  }}
+                >
+                  AED {productPrice}
+                </Text>
+              ) : (
+                <>
+                  <Text
+                    style={{
+                      fontSize: 18,
+                      color: 'black',
+                      fontWeight: '600',
+                      marginHorizontal: 5,
+                      textDecorationLine: 'line-through',
+                    }}
+                  >
+                    AED {productPriceCom}
+                  </Text>
+                  <Text
+                    style={{
+                      fontSize: 18,
+                      color: 'red',
+                      fontWeight: '700',
+                      marginHorizontal: 5,
+                    }}
+                  >
+                    AED {productPrice}
+                  </Text>
+                </>
+              )}
             </View>
           </View>
         </View>
